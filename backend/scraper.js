@@ -3,14 +3,19 @@ const fs = require('fs');
 const path = require('path');
 
 async function scrape_meesho_prices(productName) {
-    const userDataDir = path.join(__dirname, 'user-data'); // Browser profile folder
-
-    const browser = await chromium.launchPersistentContext(userDataDir, {
-        headless: false,
-        slowMo: 200, // Mimic human speed
+    const browser = await chromium.launch({
+        headless: true, // Must be true on server (no display)
         args: [
-            '--start-maximized',
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
             '--disable-blink-features=AutomationControlled',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--no-zygote',
+            '--single-process',
+            '--disable-extensions',
+            '--disable-infobars',
+            '--window-size=1920,1080',
             '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
         ]
     });
@@ -25,7 +30,7 @@ async function scrape_meesho_prices(productName) {
         });
         console.log('✅ Search page loaded');
 
-        // Optional: Wait for product grid to appear
+        // Wait for product list to appear
         try {
             await page.waitForSelector('div[class*="ProductList"]', { timeout: 10000 });
             console.log("📦 Product list detected.");
@@ -33,7 +38,6 @@ async function scrape_meesho_prices(productName) {
             console.warn("⚠️ Product list not detected. Continuing anyway.");
         }
 
-        // 💰 Extract prices
         console.log('💰 Extracting prices...');
         const prices = await page.$$eval('div, span', elements =>
             elements.map(el => {
@@ -66,7 +70,7 @@ async function scrape_meesho_prices(productName) {
             const html = await page.content();
             fs.writeFileSync('meesho_error.html', html);
         } catch (_) {
-            console.warn("Could not capture debug output.");
+            console.warn("⚠️ Could not capture debug output.");
         }
 
         await browser.close();
