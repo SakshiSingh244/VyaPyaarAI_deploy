@@ -3,8 +3,18 @@ services:
     name: vya-pyaar-backend
     env: node
     plan: free
-    buildCommand: npm install && npx playwright install chromium
+    buildCommand: |
+      npm install
+      npx playwright install chromium
     startCommand: node server.js
     envVars:
       - key: NODE_ENV
         value: production
+    buildFilter:
+      paths:
+        - server.js
+        - scraper.js
+        - package.json
+        - package-lock.json
+        - Dockerfile
+        - .env
