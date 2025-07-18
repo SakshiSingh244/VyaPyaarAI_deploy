@@ -88,7 +88,7 @@ Make sure the following are installed on your system:
 cd backend
 npm install
 npx playwright install
-npm run start
+node server.js
 
 4. Install frontend dependencies and run the frontend - (Open a second terminal (from the root project folder) and run):
 npm install
