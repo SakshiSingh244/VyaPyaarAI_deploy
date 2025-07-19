@@ -7,7 +7,66 @@ if (!apiKey) {
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
+export async function generatePlatformRecommendations(userInput: {
+  productType: string;
+  experienceLevel: string;
+  budget: string;
+  region: string;
+}): Promise<string> {
+  const { productType, experienceLevel, budget, region } = userInput;
 
+  const prompt = `
+You are a smart startup advisor for new Indian sellers. Based on the user's product type, experience, budget, and target region, recommend the best 3 platforms to start selling online.
+
+Include:
+- Platform name
+- 1–2 sentences about why it's suitable for the user
+
+### User Input:
+- Product Type: ${productType}
+- Experience Level: ${experienceLevel}
+- Budget: ${budget}
+- Region: ${region}
+
+### Output Format:
+Just list the top 3 recommendations like this:
+
+1. **Platform Name**: Explanation...
+2. **Platform Name**: Explanation...
+3. **Platform Name**: Explanation...
+`.trim();
+
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.0-flash",
+    safetySettings: [
+      {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      }
+    ],
+    generationConfig: {
+      maxOutputTokens: 800,
+      temperature: 0.6,
+      topP: 0.9,
+    },
+  });
+
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  return response.text().trim();
+}
 interface GeneratedContent {
   title: string;
   bulletPoints: string[];

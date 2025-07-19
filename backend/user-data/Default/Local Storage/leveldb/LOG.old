@@ -1,3 +1,5 @@
-2025/07/16-07:02:58.197 4668 Reusing MANIFEST C:\Users\admin\Desktop\Meesho-ScriptedByHer\backend\user-data\Default\Local Storage\leveldb/MANIFEST-000001
-2025/07/16-07:02:58.261 4668 Recovering log #7
-2025/07/16-07:02:58.268 4668 Reusing old log C:\Users\admin\Desktop\Meesho-ScriptedByHer\backend\user-data\Default\Local Storage\leveldb/000007.log 
+2025/07/19-14:43:46.830 41f0 Reusing MANIFEST C:\Users\Admin\Desktop\Meesho-ScriptedByHer\backend\user-data\Default\Local Storage\leveldb/MANIFEST-000001
+2025/07/19-14:43:46.941 41f0 Recovering log #13
+2025/07/19-14:43:46.943 41f0 Level-0 table #16: started
+2025/07/19-14:43:46.975 41f0 Level-0 table #16: 13188 bytes OK
+2025/07/19-14:43:47.005 41f0 Delete type=0 #13

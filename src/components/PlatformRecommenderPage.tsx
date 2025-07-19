@@ -4,12 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Send, Bot, User, Target, DollarSign, MapPin } from "lucide-react";
+import { generatePlatformRecommendations } from "@/components/generateWithGemini";
+
 
 interface Message {
   id: string;
   type: 'bot' | 'user';
   content: string;
   suggestions?: string[];
+}
+interface UserInputs {
+  productType: string;
+  experienceLevel: string;
+  budget: string;
+  region: string;
 }
 
 export function PlatformRecommenderPage() {
@@ -19,7 +27,12 @@ export function PlatformRecommenderPage() {
   const [conversationStage, setConversationStage] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
+  const [userInputs, setUserInputs] = useState({
+  productType: "",
+  experienceLevel: "",
+  budget: "",
+  region: ""
+});
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -71,14 +84,15 @@ export function PlatformRecommenderPage() {
       
       // Conversation flow based on stage
       if (conversationStage === 0) {
-        // First question about product type
+        setUserInputs(prev => ({ ...prev, productType: message }));
         addBotMessage(
           `Great choice! ${message} can do really well online 👍\n\nNow, tell me about your experience level:\n\nHave you sold products online before?`,
           ["Complete beginner", "Some experience", "Experienced seller", "I've tried but struggled"]
         );
         setConversationStage(1);
       } else if (conversationStage === 1) {
-        // Experience level
+          setUserInputs(prev => ({ ...prev, experienceLevel: message }));
+
         let experienceResponse = "";
         if (lowerMessage.includes('beginner') || lowerMessage.includes('new')) {
           experienceResponse = "Perfect! I'll recommend beginner-friendly platforms 🌱";
@@ -96,14 +110,14 @@ export function PlatformRecommenderPage() {
         );
         setConversationStage(2);
       } else if (conversationStage === 2) {
-        // Budget
+        setUserInputs(prev => ({ ...prev, budget: message }));
         addBotMessage(
           `Got it! Budget planning is smart 💰\n\nLast question: Which region do you primarily want to serve?\n\n(This affects shipping costs and customer reach)`,
           ["My local city", "My state", "All of India", "Metro cities only", "Rural areas", "International too"]
         );
         setConversationStage(3);
       } else if (conversationStage === 3) {
-        // Final recommendations
+        setUserInputs(prev => ({ ...prev, region: message }));
         generateRecommendations();
         setConversationStage(4);
       } else {
@@ -116,14 +130,23 @@ export function PlatformRecommenderPage() {
     }, 1500);
   };
 
-  const generateRecommendations = () => {
-    const recommendations = `Perfect! Based on your responses, here are my top platform recommendations for you:\n\n🥇 **MEESHO** (Best for beginners)\n• Zero listing fees\n• Easy setup process\n• Great for fashion & home products\n• Strong support system\n\n🥈 **AMAZON** (For serious sellers)\n• Huge customer base\n• Fulfillment support available\n• Higher fees but better visibility\n• Professional selling tools\n\n🥉 **INSTAGRAM SHOP** (Creative freedom)\n• Direct customer connection\n• Great for handmade/unique items\n• Free to start\n• Build your own brand\n\n📱 **WhatsApp Business** (Local sales)\n• Perfect for local customers\n• No fees\n• Personal touch\n• Easy communication\n\nWhich platform interests you most? I can help you get started!`;
+const generateRecommendations = async () => {
+  try {
+    setIsTyping(true);
 
+    const result = await generatePlatformRecommendations(userInputs); // Gemini API call
     addBotMessage(
-      recommendations,
+      `Based on your inputs, here are the top platform recommendations:\n\n${result}`,
       ["Start with Meesho", "Learn about Amazon", "Set up Instagram Shop", "Use WhatsApp Business", "Compare all options"]
     );
-  };
+  } catch (error) {
+    console.error("Gemini recommendation failed:", error);
+    addBotMessage("Oops! I couldn't generate platform recommendations right now. Please try again later.");
+  } finally {
+    setIsTyping(false);
+  }
+};
+
 
   const handleSuggestionClick = (suggestion: string) => {
     if (suggestion.includes("Meesho") && conversationStage === 4) {

@@ -57,7 +57,7 @@ export function AIPricingPage() {
     
     setIsScraping(true);
     try {
-      const response = await fetch('https://vyapyaarai-deploy.onrender.com/api/scrape-prices', {
+      const response = await fetch('http://localhost:5000/api/scrape-prices', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

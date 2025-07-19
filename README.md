@@ -12,7 +12,7 @@ Our smart selling assistant is powered by a combination of AI and real-time web 
 
 Simultaneously, we perform live price scraping from Meesho using Playwright to analyze real competitor pricing data for similar products. Using this data, we run smart pricing algorithms that suggest the most profitable and competitive price range for your selected selling platform.
 
-The entire system is built using the MERN stack ( Express.js, React, and Node.js) for a seamless and scalable experience, and styled with modern tools like Tailwind CSS and Radix UI.
+The entire system is built using the MERN stack ( MongoDB, Express.js, React, and Node.js) for a seamless and scalable experience, and styled with modern tools like Tailwind CSS and Radix UI.
 --------------------------------------------------------------------------------------------------------------
 
 ### Project Overview:
@@ -23,7 +23,7 @@ VyapYaarAI is an intelligent assistant designed to help first-time entrepreneurs
 
 VyapYaarAI uses advanced natural language models (like Gemini) and contextual market data to provide personalized business suggestions, sustainable product ideas, and strategic pricing tools. It also enables smart content generation for promotions and listing optimization, reducing the technical and creative barriers for new-age digital sellers.
 
-Built with accessibility in mind, VyapYaarAI leverages tools like Streamlit for ease of use and integrates modular AI components for scalable development. The system is structured to support multi-tiered user journeys: those who are just exploring entrepreneurship and those ready to launch online.
+Built with accessibility in mind, VyapYaarAI leverages tools like VITE for ease of use and integrates modular AI components for scalable development. The system is structured to support multi-tiered user journeys: those who are just exploring entrepreneurship and those ready to launch online.
 
 Inspired by Meesho’s vision of democratizing e-commerce, VyapYaarAI aims to bridge the digital divide by making business mentorship available to every aspiring seller — especially in Tier-2, Tier-3, and rural India.
 
