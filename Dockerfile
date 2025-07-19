@@ -5,11 +5,11 @@ FROM node:18
 WORKDIR /app
 
 # Step 3: Copy package files and install dependencies
-COPY backend/backend/package*.json ./
+COPY backend/package*.json ./
 RUN npm install
 
 # Step 4: Copy all backend files
-COPY backend/backend/ .
+COPY backend/ .
 
 # Step 5: Expose the port your app uses
 EXPOSE 5000
