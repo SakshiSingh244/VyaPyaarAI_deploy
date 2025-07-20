@@ -13,6 +13,7 @@
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "mongoose": "^8.16.4",
     "playwright": "^1.54.1",
     "selenium-webdriver": "^4.34.0"
   }
