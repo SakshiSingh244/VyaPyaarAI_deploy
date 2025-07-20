@@ -66,7 +66,7 @@ export function AIPricingPage() {
       });
       
       if (!response.ok) {
-        throw new Error('Failed to fetch competitor prices');
+        throw new Error('Oops! This feature works only when running locally. Try it on your local setup. 😊');
       }
       
       const data = await response.json();
@@ -85,7 +85,7 @@ export function AIPricingPage() {
         });
       }
     } catch (error) {
-      setScrapedPrices({ error: error instanceof Error ? error.message : 'Failed to fetch prices' });
+      setScrapedPrices({ error: error instanceof Error ? error.message : 'Oops! This feature works only when running locally. Try it on your local setup. 😊' });
       toast({
         variant: "destructive",
         title: "Scraping Failed",
