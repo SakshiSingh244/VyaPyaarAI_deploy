@@ -85,7 +85,7 @@ export function AIPricingPage() {
         });
       }
     } catch (error) {
-      setScrapedPrices({ error: error instanceof Error ? error.message : 'Failed to fetch' });
+      setScrapedPrices({ error: error instanceof Error ? error.message : 'Oops! This feature works only when running locally. Try it on your local setup. 😊' });
       toast({
         variant: "destructive",
         title: "Scraping Failed",
