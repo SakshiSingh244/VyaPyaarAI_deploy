@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: VyaPyaarAI_deploy
+    env: node
+    region: oregon
+    plan: free
+    repo: https://github.com/SakshiSingh244/VyaPyaarAI_deploy
+    branch: main
+    rootDir: backend
+    buildCommand: npm install && npx playwright install chromium
+    startCommand: node server.js
+    autoDeploy: true
