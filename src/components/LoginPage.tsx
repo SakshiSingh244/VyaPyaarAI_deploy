@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { Heart, Sparkles } from "lucide-react";
 
-const API_BASE_URL = "http://localhost:5000/api"; // Change if your backend is hosted elsewhere
+const API_BASE_URL = "https://vyapyaarai-deploy.onrender.com/api"; // Change if your backend is hosted elsewhere
 
 const signUp = async (userData: { username: string; password: string; email?: string }) => {
   try {
